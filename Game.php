@@ -23,11 +23,38 @@ class Game{
             new Commander( 'Nikolay'),
         );
 
-        $teemUnits2[3]->setHealth(150);
-        $teemUnits2[4]->setHealth(120);
+        $helmet = new Equipment('helmet');
+        $helmet->setAddHealth( 30 );
+        $helmet->setProtectedBodyPart( 'head' );
 
-        $teemUnits1[3]->setDamage(70);
-        $teemUnits1[4]->setDamage(80);
+        $vest = new Equipment('bulletproof vest');
+        $vest->setAddHealth( 50 );
+        $vest->setProtectedBodyPart( 'body' );
+
+        $grenades = new Weapon( 'grenades' );
+        $grenades->setDamage( 25 );
+
+        $rifle = new Weapon( 'rifle' );
+        $rifle->setDamage( 20 );
+
+        $knife = new Weapon( 'knife' );
+        $knife->setDamage( 5 );
+
+        $machineGun = new Weapon( 'machine gun' );
+        $machineGun->setDamage( 50 );
+
+        $cannon = new Weapon( 'cannon' );
+        $cannon->setDamage( 60 );
+
+        $teemUnits1[1]->addEquipment( $helmet );
+        $teemUnits1[5]->addEquipment( $vest );
+
+        $teemUnits1[3]->setActiveWeapon( $cannon );
+        $teemUnits1[4]->setActiveWeapon( $knife );
+
+        $teemUnits2[1]->setActiveWeapon( $machineGun );
+        $teemUnits2[4]->setActiveWeapon( $grenades );
+        $teemUnits2[5]->setActiveWeapon( $rifle );
 
         $teem1 = new Teem($teemUnits1);
         $teem2 = new Teem($teemUnits2);
@@ -40,7 +67,6 @@ class Game{
         echo '</div>';
 
         for($i=0;;$i++){
-            echo '<br><br> -------- <br> Round '. $i . '<br>';
 
             $damage1 = $teem1->getDamage();
             $damage2 = $teem2->getDamage();
@@ -48,16 +74,17 @@ class Game{
             $isAnyAliveUnit1 = $teem1->takeDamage($damage2);
             $isAnyAliveUnit2 = $teem2->takeDamage($damage1);
 
-            echo '<div style="display: flex">';
-            $teem1->renderInfo();
-            $teem2->renderInfo();
-            echo '</div>';
-
             if( !$isAnyAliveUnit1 || !$isAnyAliveUnit2 ){
                 $winner = $isAnyAliveUnit2 === false? '1' : '2';
                 echo '<br> Teem ' . $winner . ' win !';
                 break;
             }
+            echo '<br><br> -------- <br> Round '. $i . '<br>';
+
+            echo '<div style="display: flex">';
+            $teem1->renderInfo();
+            $teem2->renderInfo();
+            echo '</div>';
         }
 
     }

@@ -37,6 +37,18 @@ class Teem{
     }
 
     /**
+     * @return void
+     */
+    private function updateHealth()
+    {
+        $this->health = 0;
+        foreach( $this->units as $unit ){
+            $this->health += $unit->getHealth();
+        }
+        $this->health = (int) $this->health;
+    }
+
+    /**
      * @return mixed
      */
     public function getDamage()
@@ -86,9 +98,6 @@ class Teem{
             return false;
         }
         $damagePerUnit = $damage / count( $this->units );
-
-//        printf('<br>$damagePerUnit:' . $damagePerUnit.'<br>' );
-
         $this->health = $this->health - $damage;
 
         foreach( $this->units as $key => $unit ){
@@ -98,6 +107,7 @@ class Teem{
             }
         }
         $this->updateDamage();
+        $this->updateHealth();
 
         return true;
     }

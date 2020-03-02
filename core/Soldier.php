@@ -54,6 +54,8 @@ class Soldier{
     public function addEquipment(Equipment $equipment)
     {
         $this->equipments[] = $equipment;
+        $this->health += $equipment->getAddHealth();
+
     }
 
     /**
@@ -67,7 +69,7 @@ class Soldier{
     /**
      * @param mixed $health
      */
-    public function setHealth(int $health)
+    public function setHealth(float $health)
     {
         $this->health = $health;
     }
@@ -102,10 +104,11 @@ class Soldier{
     public function setActiveWeapon(Weapon $activeWeapon)
     {
         $this->activeWeapon = $activeWeapon;
+        $this->damage += $this->activeWeapon->getDamage();
     }
 
-    public function takeDamage( int $damage ){
-        $health = $this->getHealth() - $damage;
+    public function takeDamage( float $damage ){
+        $health = $this->getHealth() - round( $damage, 1 );
 
         if( $health <= 0 ){
             return false;
