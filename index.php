@@ -1,16 +1,7 @@
 <?php
-$corePath = './core/';
-$files = array(
-    'Weapon',
-    'Soldier',
-    'Commander',
-    'Equipment',
-    'Teem',
-    '../Game'
-);
+spl_autoload_register(function ( $fileName ){
+    require_once './core/'.$fileName.'.php';
+});
 
-foreach( $files as $file ){
-    require_once $corePath.$file.'.php';
-}
 
 new Game();
