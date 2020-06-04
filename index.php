@@ -1,7 +1,4 @@
 <?php
-spl_autoload_register(function ( $fileName ){
-    require_once './core/'.$fileName.'.php';
-});
-
+require_once './autoloader.php';
 
 new Game();
